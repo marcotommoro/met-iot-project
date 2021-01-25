@@ -63,7 +63,7 @@ public class ContactDWRawSensor extends SmartObjectResource<String> {
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                if (status_dw == "open") logger.info("ATTENZIONE PORTA APERTA");
+                                if (status_dw == "open") notifyUpdate("open");
                             }
                         }, delay);
                     }

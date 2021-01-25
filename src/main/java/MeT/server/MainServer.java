@@ -30,7 +30,6 @@ public class MainServer extends CoapServer{
             public void onDataChanged(SmartObjectResource<Date> resource, Date updatedValue) {
                 if(resource != null && updatedValue != null)
                     logger.info("PIR Device: {} -> Ti sono entrati in casa, s'ta 'tenti - SERVER", resource.getId(), updatedValue);
-
             }
         });
     }
