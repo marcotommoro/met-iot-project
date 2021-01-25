@@ -45,7 +45,6 @@ public class PirRawSensor extends SmartObjectResource<Date> {
             this.timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-
                     updateDate = new Date();
                     if (generatePresence()) notifyUpdate(updateDate);
 
