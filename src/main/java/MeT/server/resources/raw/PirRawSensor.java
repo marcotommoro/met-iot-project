@@ -11,11 +11,11 @@ public class PirRawSensor extends SmartObjectResource<Date> {
     private static Logger logger = LoggerFactory.getLogger(PirRawSensor.class);
 
     private int MIN_PRESENCE_DETECTED = 0;
-    private int MAX_PRESENCE_DETECTED = 20;
+    private int MAX_PRESENCE_DETECTED = 0;
     private int MIN_RANDOM_VALUE = 0;
     private int MAX_RANDOM_VALUE = 100;
 
-    public static final long UPDATE_PERIOD = 1000;
+    public static final long UPDATE_PERIOD = 5000;
     private static final long TASK_DELAY_TIME = 0;
 
     private Timer timer;

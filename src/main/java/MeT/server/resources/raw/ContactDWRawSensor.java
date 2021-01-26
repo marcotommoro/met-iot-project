@@ -13,7 +13,7 @@ public class ContactDWRawSensor extends SmartObjectResource<String> {
     private static Logger logger = LoggerFactory.getLogger(ContactDWRawSensor.class);
 
     private int MIN_DW_OPEN_CLOSE = 0;
-    private int MAX_DW_OPEN_CLOSE = 10;
+    private int MAX_DW_OPEN_CLOSE = 0;
 
     private int MIN_RANDOM_VALUE = 0;
     private int MAX_RANDOM_VALUE = 100;

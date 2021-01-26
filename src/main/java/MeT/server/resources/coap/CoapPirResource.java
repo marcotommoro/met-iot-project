@@ -49,13 +49,6 @@ public class CoapPirResource extends CoapResource {
 
     }
 
-    public void handleGET(CoapExchange exchange){
-        if(!(exchange.getRequestOptions().getAccept() == MediaTypeRegistry.TEXT_PLAIN))
-            exchange.respond(CoAP.ResponseCode.BAD_REQUEST, "Wrong content type");
-
-        exchange.respond(CoAP.ResponseCode.CONTENT, this.updateDate.toString());
-
-    }
 }
 
 

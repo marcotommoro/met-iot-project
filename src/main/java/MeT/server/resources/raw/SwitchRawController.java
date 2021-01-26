@@ -17,6 +17,11 @@ public class SwitchRawController extends SmartObjectResource<Boolean> {
 
     private Boolean isActive;
 
+    public SwitchRawController() {
+        super(UUID.randomUUID().toString(), RESOURCE_TYPE);
+        this.isActive = false;
+    }
+
     public SwitchRawController(boolean initial) {
         super(UUID.randomUUID().toString(), RESOURCE_TYPE);
         this.isActive = initial;
@@ -27,7 +32,7 @@ public class SwitchRawController extends SmartObjectResource<Boolean> {
     }
 
     public void toogleActive () {
-        isActive = !isActive;
+        this.isActive = !this.isActive;
         notifyUpdate(isActive);
     }
 
