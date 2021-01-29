@@ -38,16 +38,14 @@ public class CoapPirResource extends CoapResource {
         this.getAttributes().addAttribute("rt", PirRawSensor.RESOURCE_TYPE);
         this.getAttributes().addAttribute("ct", Integer.toString(MediaTypeRegistry.TEXT_PLAIN));
 
-        this.pirRawSensor.addDataListener(new ResourceDataListener<Date>() {
-            @Override
-            public void onDataChanged(SmartObjectResource<Date> resource, Date updatedValue) {
-                if(resource == null || updatedValue == null) return;
-                updateDate = updatedValue;
-                logger.info("PIR Device: {} -> Ti sono entrati in casa, s'ta 'tenti - Resource", resource.getId(), updatedValue);
-            }
-        });
-
     }
+
+
+    @Override
+    public void handleGET(CoapExchange exchange) {
+        exchange.respond(this.updateDate.toString());
+    }
+
 
 }
 

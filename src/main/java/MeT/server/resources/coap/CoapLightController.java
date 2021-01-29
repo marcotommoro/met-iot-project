@@ -11,6 +11,7 @@ import org.eclipse.californium.core.server.resources.CoapExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Struct;
 import java.util.Date;
 
 public class CoapLightController extends CoapResource {
@@ -19,7 +20,6 @@ public class CoapLightController extends CoapResource {
     private String deviceId;
     private SwitchRawController switchRawController;
     private static final String OBJECT_TITLE = "Coap light controller";
-    private boolean isActive;
 
     public CoapLightController(String deviceId, String url, SwitchRawController switchRawController){
         super(url);
@@ -39,30 +39,21 @@ public class CoapLightController extends CoapResource {
         this.getAttributes().addAttribute("rt", PirRawSensor.RESOURCE_TYPE);
         this.getAttributes().addAttribute("ct", Integer.toString(MediaTypeRegistry.TEXT_PLAIN));
 
-        this.switchRawController.addDataListener(new ResourceDataListener<Boolean>() {
-            @Override
-            public void onDataChanged(SmartObjectResource<Boolean> resource, Boolean updatedValue) {
-                if(resource == null || updatedValue == null) return;
-                isActive = updatedValue;
-                logger.info("Light controller Device: {} -> Ti sono entrati in casa, s'ta 'tenti - Resource", resource.getId(), updatedValue);
-            }
-        });
+
     }
 
     public void handleGET(CoapExchange exchange){
         if(!(exchange.getRequestOptions().getAccept() == MediaTypeRegistry.TEXT_PLAIN))
             exchange.respond(CoAP.ResponseCode.BAD_REQUEST, "Wrong content type");
-
-        exchange.respond(CoAP.ResponseCode.CONTENT, this.isActive ? "ON": "OFF");
+        System.out.println("ciao sono dentro" +  switchRawController.getActive());
+        exchange.respond(CoAP.ResponseCode.CONTENT, switchRawController.getActive() ? "ON": "OFF");
     }
 
     public void handlePOST(CoapExchange exchange){
         try{
             if(exchange.getRequestPayload() == null){
-                this.isActive = !this.isActive;
-                this.switchRawController.toogleActive();
-                logger.info("Resource Status Light Updated: {}", this.isActive);
-
+                switchRawController.toogleActive();
+                logger.info("Resource Status Light Updated: {}", switchRawController.getActive());
                 exchange.respond(CoAP.ResponseCode.CHANGED);
             }
             else{

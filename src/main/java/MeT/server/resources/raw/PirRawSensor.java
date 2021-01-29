@@ -11,12 +11,12 @@ public class PirRawSensor extends SmartObjectResource<Date> {
     private static Logger logger = LoggerFactory.getLogger(PirRawSensor.class);
 
     private int MIN_PRESENCE_DETECTED = 0;
-    private int MAX_PRESENCE_DETECTED = 0;
+    private int MAX_PRESENCE_DETECTED = 5;
     private int MIN_RANDOM_VALUE = 0;
     private int MAX_RANDOM_VALUE = 100;
 
-    public static final long UPDATE_PERIOD = 5000;
-    private static final long TASK_DELAY_TIME = 0;
+    public static final long UPDATE_PERIOD = 3000;
+    private static final long TASK_DELAY_TIME = 1000;
 
     private Timer timer;
     private Date updateDate;
@@ -32,7 +32,6 @@ public class PirRawSensor extends SmartObjectResource<Date> {
     private boolean generatePresence(){
         int check = random.nextInt( this.MAX_RANDOM_VALUE - this.MIN_RANDOM_VALUE ) + this.MIN_RANDOM_VALUE;
         if (check >= this.MIN_PRESENCE_DETECTED && check <= this.MAX_PRESENCE_DETECTED) return true;
-
         return false;
 
     }
@@ -47,6 +46,7 @@ public class PirRawSensor extends SmartObjectResource<Date> {
                 public void run() {
                     updateDate = new Date();
                     if (generatePresence()) notifyUpdate(updateDate);
+
 
                 }
             }, TASK_DELAY_TIME, UPDATE_PERIOD);

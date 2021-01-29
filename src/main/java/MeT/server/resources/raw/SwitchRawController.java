@@ -1,5 +1,6 @@
 package MeT.server.resources.raw;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +35,11 @@ public class SwitchRawController extends SmartObjectResource<Boolean> {
     public void toogleActive () {
         this.isActive = !this.isActive;
         notifyUpdate(isActive);
+    }
+
+    public void setActive(boolean state){
+        if(this.isActive != state)
+            toogleActive();
     }
 
     @Override

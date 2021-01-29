@@ -39,14 +39,7 @@ public class CoapContactDWResource extends CoapResource {
         this.getAttributes().addAttribute("rt", PirRawSensor.RESOURCE_TYPE);
         this.getAttributes().addAttribute("ct", Integer.toString(MediaTypeRegistry.TEXT_PLAIN));
 
-        this.contactDWRawSensor.addDataListener(new ResourceDataListener<String>() {
-            @Override
-            public void onDataChanged(SmartObjectResource<String> resource, String updatedValue) {
-                if(resource == null || updatedValue == null) return;
-                status_dw = updatedValue;
-                logger.info("Contact DW Device: {} -> Ti sono entrati in casa, s'ta 'tenti - Resource", resource.getId(), updatedValue);
-            }
-        });
+
 
     }
 

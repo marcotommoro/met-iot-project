@@ -14,7 +14,7 @@ import java.io.IOException;
 
 
 public class CoapGetPostClient extends CoapClient implements CoapRequest {
-    private static Logger logger =  LoggerFactory.getLogger(CoapGetPostClient.class);
+    private static Logger logger = LoggerFactory.getLogger(CoapGetPostClient.class);
 
     public CoapGetPostClient(String url){
         super(LOCALHOST + url);
@@ -29,11 +29,15 @@ public class CoapGetPostClient extends CoapClient implements CoapRequest {
             response = this.advanced(request);
 
             String text = response.getResponseText();
-            logger.info("Payload: {}", text);
+            logger.info("Stato: {}", text);
 
         } catch (ConnectorException | IOException  | NullPointerException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
+    public void onDataChanged(String updatedValue) {
+
+    }
 }

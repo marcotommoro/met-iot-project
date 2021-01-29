@@ -37,16 +37,20 @@ public class MainServer extends CoapServer{
         pirRawSensor.addDataListener(new ResourceDataListener<Date>() {
             @Override
             public void onDataChanged(SmartObjectResource<Date> resource, Date updatedValue) {
-                if(resource != null && updatedValue != null)
-                    logger.info("PIR Device: {} -> Ti sono entrati in casa, s'ta 'tenti - SERVER", resource.getId(), updatedValue);
+                if(resource == null || updatedValue == null) return;
+                logger.info("PIR Device -> Ti sono entrati in casa, s'ta 'tenti - SERVER", updatedValue);
+                switchRawControllerAlarm.setActive(true);
+                switchRawControllerLight.setActive(true);
             }
         });
 
         contactDWRawSensor.addDataListener(new ResourceDataListener<String>() {
             @Override
             public void onDataChanged(SmartObjectResource<String> resource, String updatedValue) {
-                if(resource != null && updatedValue != null)
-                    logger.info("Contact dw Device: {} -> Ti sono entrati in casa, s'ta 'tenti - SERVER", resource.getId(), updatedValue);
+                if(resource == null || updatedValue == null) return;
+                logger.info("Contact dw Device -> Ti sono entrati in casa, s'ta 'tenti - SERVER", updatedValue);
+                switchRawControllerAlarm.setActive(true);
+                switchRawControllerLight.setActive(true);
             }
         });
 
@@ -54,7 +58,7 @@ public class MainServer extends CoapServer{
             @Override
             public void onDataChanged(SmartObjectResource<Boolean> resource, Boolean updatedValue) {
                 if(resource != null && updatedValue != null)
-                    logger.info("Light Device: {} -> Ti sono entrati in casa, s'ta 'tenti - SERVER", resource.getId(), updatedValue);
+                    logger.info("Light Device {}-> Ti sono entrati in casa, s'ta 'tenti - SERVER",  updatedValue);
             }
         });
 
@@ -62,8 +66,7 @@ public class MainServer extends CoapServer{
             @Override
             public void onDataChanged(SmartObjectResource<Boolean> resource, Boolean updatedValue) {
                 if(resource != null && updatedValue != null)
-                    logger.info("Light Device: {} -> Ti sono entrati in casa, s'ta 'tenti - SERVER", resource.getId(), updatedValue);
-
+                    logger.info("Alarm Device {} -> Ti sono entrati in casa, s'ta 'tenti - SERVER", updatedValue);
             }
         });
 
