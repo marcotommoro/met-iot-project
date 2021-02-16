@@ -24,21 +24,19 @@ public class CoapObservableClient extends CoapClient implements CoapRequest {
         super(LOCALHOST + url);
         relation = null;
         this.request = Request.newGet().setURI(LOCALHOST + url).setObserve();
-        System.out.println(LOCALHOST + url);
         this.request.setConfirmable(true);
         this.resourceListenerList = new ArrayList<>();
+        System.out.println(LOCALHOST + url);
     }
 
     public void startObserve(){
         if (relation != null) return;
-        logger.info("entrato");
         relation = this.observe(this.request, new CoapHandler() {
             @Override
             public void onLoad(CoapResponse coapResponse) {
-                logger.info("in on load");
                 String content = coapResponse.getResponseText();
-                logger.info("NOTIFICATION Body: " + content);
-                notifyUpdate(content);
+                System.out.println("test-"+content+"---");
+                if (content != null && content.length() > 0) notifyUpdate(content);
             }
 
             @Override

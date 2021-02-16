@@ -43,14 +43,13 @@ public class CoapLightController extends CoapResource {
     }
 
     public void handleGET(CoapExchange exchange){
-        if(!(exchange.getRequestOptions().getAccept() == MediaTypeRegistry.TEXT_PLAIN))
-            exchange.respond(CoAP.ResponseCode.BAD_REQUEST, "Wrong content type");
-        System.out.println("ciao sono dentro" +  switchRawController.getActive());
         exchange.respond(CoAP.ResponseCode.CONTENT, switchRawController.getActive() ? "ON": "OFF");
     }
 
     public void handlePOST(CoapExchange exchange){
         try{
+            logger.info("MAFFIGA 1");
+
             if(exchange.getRequestPayload() == null){
                 switchRawController.toogleActive();
                 logger.info("Resource Status Light Updated: {}", switchRawController.getActive());

@@ -15,7 +15,7 @@ public class MainCoapObservable {
         CoapGetPostClient[] clients = new CoapGetPostClient[2];
 
         observableClients[0] = new CoapObservableClient("pir");
-        observableClients[0] = new CoapObservableClient("contact-dw");
+        observableClients[1] = new CoapObservableClient("contact-dw");
         clients[0] = new CoapGetPostClient("light");
         clients[1] = new CoapGetPostClient( "alarm");
 
@@ -25,19 +25,19 @@ public class MainCoapObservable {
         observableClients[0].addDataListener(new CoapRequest() {
             @Override
             public void onDataChanged(String updatedValue) {
-                logger.info("SI PUO FARE PIR UPDATED {}", updatedValue);
+                System.out.println("PIR-UPDATED "+ updatedValue);
             }
         });
 
-        observableClients[1].addDataListener(new CoapRequest() {
+       observableClients[1].addDataListener(new CoapRequest() {
             @Override
             public void onDataChanged(String updatedValue) {
-                logger.info("SI PUO FARE CONTACT DW UPDATED {}", updatedValue);
+                System.out.println("CONTACT DW-UPDATED "+ updatedValue);
             }
         });
 
         try{
-            Thread.sleep(30000);
+            Thread.sleep(300000);
         }catch (Exception e){}
 
     }

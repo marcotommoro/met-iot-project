@@ -28,7 +28,7 @@ public class CoapContactDWResource extends CoapResource {
             logger.error("Non va un cazzo");
             return;
         }
-
+        this.status_dw = "close";
         this.contactDWRawSensor = contactDWRawSensor;
         this.deviceId = deviceId;
 
@@ -36,18 +36,25 @@ public class CoapContactDWResource extends CoapResource {
         this.setObserveType(CoAP.Type.CON);
         this.getAttributes().setTitle(OBJECT_TITLE);
         this.getAttributes().setObservable();
-        this.getAttributes().addAttribute("rt", PirRawSensor.RESOURCE_TYPE);
+        this.getAttributes().addAttribute("rt", ContactDWRawSensor.RESOURCE_TYPE);
         this.getAttributes().addAttribute("ct", Integer.toString(MediaTypeRegistry.TEXT_PLAIN));
 
-
+        this.contactDWRawSensor.addDataListener(new ResourceDataListener<String>() {
+            @Override
+            public void onDataChanged(SmartObjectResource<String> resource, String updatedValue) {
+                System.out.println("sSTATUS-"+updatedValue);
+                status_dw = updatedValue;
+                changed();
+            }
+        });
 
     }
 
     public void handleGET(CoapExchange exchange){
-        if(!(exchange.getRequestOptions().getAccept() == MediaTypeRegistry.TEXT_PLAIN))
-            exchange.respond(CoAP.ResponseCode.BAD_REQUEST, "Wrong content type");
-
-        exchange.respond(CoAP.ResponseCode.CONTENT, this.status_dw);
+        if (this.status_dw == null)
+            exchange.respond(CoAP.ResponseCode.NOT_FOUND);
+        else
+            exchange.respond(CoAP.ResponseCode.CONTENT, this.status_dw);
     }
 }
 

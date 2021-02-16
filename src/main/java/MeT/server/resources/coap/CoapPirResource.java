@@ -21,7 +21,7 @@ public class CoapPirResource extends CoapResource {
     private Date updateDate;
 
     public CoapPirResource(String deviceId, String url, PirRawSensor pirRawSensor){
-        super(url);
+        super(deviceId+"/"+url);
 
         if (deviceId == null || url == null || pirRawSensor == null) {
             logger.error("Non va un cazzo");
@@ -30,20 +30,32 @@ public class CoapPirResource extends CoapResource {
 
         this.pirRawSensor = pirRawSensor;
         this.deviceId = deviceId;
-
+        this.updateDate = new Date();
         this.setObservable(true);
         this.setObserveType(CoAP.Type.CON);
         this.getAttributes().setTitle(OBJECT_TITLE);
         this.getAttributes().setObservable();
+        this.getAttributes().addAttribute("rt", pirRawSensor.getType());
         this.getAttributes().addAttribute("rt", PirRawSensor.RESOURCE_TYPE);
         this.getAttributes().addAttribute("ct", Integer.toString(MediaTypeRegistry.TEXT_PLAIN));
 
+        this.pirRawSensor.addDataListener(new ResourceDataListener<Date>() {
+            @Override
+            public void onDataChanged(SmartObjectResource<Date> resource, Date updatedValue) {
+                updateDate = updatedValue;
+                changed();
+            }
+        });
     }
 
 
     @Override
     public void handleGET(CoapExchange exchange) {
-        exchange.respond(this.updateDate.toString());
+        logger.info(String.valueOf(this.updateDate));
+        if (this.updateDate == null)
+            exchange.respond(CoAP.ResponseCode.NOT_FOUND );
+        else
+            exchange.respond(CoAP.ResponseCode.CONTENT,this.updateDate.toString());
     }
 
 

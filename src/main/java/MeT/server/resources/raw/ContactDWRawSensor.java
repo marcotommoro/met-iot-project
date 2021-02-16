@@ -13,7 +13,7 @@ public class ContactDWRawSensor extends SmartObjectResource<String> {
     private static Logger logger = LoggerFactory.getLogger(ContactDWRawSensor.class);
 
     private int MIN_DW_OPEN_CLOSE = 0;
-    private int MAX_DW_OPEN_CLOSE = 5;
+    private int MAX_DW_OPEN_CLOSE = 15;
 
     private int MIN_RANDOM_VALUE = 0;
     private int MAX_RANDOM_VALUE = 100;
@@ -63,7 +63,10 @@ public class ContactDWRawSensor extends SmartObjectResource<String> {
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                if (status_dw == "open") notifyUpdate("open");
+                                if (status_dw == "open") {
+                                    System.out.println("entrp dentro l'open e chiamonotify update");
+                                    notifyUpdate("open");
+                                }
                             }
                         }, delay);
                     }

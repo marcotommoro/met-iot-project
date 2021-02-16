@@ -23,10 +23,11 @@ public class MainCoapRequest {
         while(true){
             System.out.print("Enter:\n1) Get light\n2) Get alarm\n3) Toogle light\n4) Toogle alarm\nChoice: ");
             choice = keyboard.nextInt();
+
             if (choice < 1 || choice > clients.length * 2){
                 logger.info("Allora sei un coglione");
-                continue;
             }
+
             try{
                 switch (choice)
                 {

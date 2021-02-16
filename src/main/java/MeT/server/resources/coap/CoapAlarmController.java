@@ -18,9 +18,11 @@ public class CoapAlarmController extends CoapResource {
     private SwitchRawController switchRawController;
     private static final String OBJECT_TITLE = "Coap alarm controller";
 
+
+
+
     public CoapAlarmController(String deviceId, String url, SwitchRawController switchRawController){
         super(url);
-
         if (deviceId == null || url == null || switchRawController == null) {
             logger.error("Non va un cazzo");
             return;
@@ -40,9 +42,6 @@ public class CoapAlarmController extends CoapResource {
     }
 
     public void handleGET(CoapExchange exchange){
-        if(!(exchange.getRequestOptions().getAccept() == MediaTypeRegistry.TEXT_PLAIN))
-            exchange.respond(CoAP.ResponseCode.BAD_REQUEST, "Wrong content type");
-
         exchange.respond(CoAP.ResponseCode.CONTENT, switchRawController.getActive() ? "ON": "OFF");
     }
 
