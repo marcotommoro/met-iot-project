@@ -35,7 +35,6 @@ public class CoapPirResource extends CoapResource {
         this.setObserveType(CoAP.Type.CON);
         this.getAttributes().setTitle(OBJECT_TITLE);
         this.getAttributes().setObservable();
-        this.getAttributes().addAttribute("rt", pirRawSensor.getType());
         this.getAttributes().addAttribute("rt", PirRawSensor.RESOURCE_TYPE);
         this.getAttributes().addAttribute("ct", Integer.toString(MediaTypeRegistry.TEXT_PLAIN));
 

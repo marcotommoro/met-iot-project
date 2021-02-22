@@ -91,14 +91,14 @@ public class MainServer extends CoapServer{
            }
        }));
 
-        contactDWRawSensor.forEach(contactDWRawSensor -> contactDWRawSensor.addDataListener(new ResourceDataListener<String>() {
+       contactDWRawSensor.forEach(contactDWRawSensor -> contactDWRawSensor.addDataListener(new ResourceDataListener<String>() {
             @Override
             public void onDataChanged(SmartObjectResource<String> resource, String updatedValue) {
                 if(resource == null || updatedValue == null) return;
                 logger.info("Contact dw Device -> Ti sono entrati in "+ deviceId + " s'ta 'tenti", updatedValue);
                 lightsAlarmON();
             }
-        }));
+       }));
 
     }
 
@@ -110,7 +110,7 @@ public class MainServer extends CoapServer{
     public static void main(String[] args){
         MainServer[] servers = new MainServer[2];
         servers[0] = new MainServer(GARAGE_NAME, GARAGE_PORT, Map.of("pir",2, "light", 6, "alarm", 1, "contact-dw", 3));
-        servers[1] = new MainServer(KITCHEN_NAME,KITCHEN_PORT, Map.of("pir",1, "light", 1, "alarm", 1, "contact-dw", 1));
+        servers[1] = new MainServer(KITCHEN_NAME, KITCHEN_PORT, Map.of("pir",1, "light", 1, "alarm", 1, "contact-dw", 1));
         servers[0].start();
         servers[1].start();
         logger.info("servers started");

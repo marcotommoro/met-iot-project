@@ -48,10 +48,6 @@ public class MainCoapRequest {
                 }
 
             }catch (Exception e){}
-
-
         }
-
-
     }
 }

@@ -48,7 +48,6 @@ public class PirRawSensor extends SmartObjectResource<Date> {
                     updateDate = new Date();
                     if (generatePresence()) notifyUpdate(updateDate);
 
-
                 }
             }, TASK_DELAY_TIME, UPDATE_PERIOD);
 
@@ -64,25 +63,6 @@ public class PirRawSensor extends SmartObjectResource<Date> {
         return this.updateDate;
     }
 
-
-    public static void main(String[] args){
-
-
-        ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
-        logger.setLevel(Level.toLevel("error"));
-
-
-
-        PirRawSensor pirRawSenso = new PirRawSensor();
-        logger.info("PIR resource created");
-        pirRawSenso.addDataListener(new ResourceDataListener<Date>() {
-            @Override
-            public void onDataChanged(SmartObjectResource<Date> resource, Date updatedValue) {
-                if(resource != null && updatedValue != null)
-                    logger.info("PIR Device: {} -> Ti sono entrati in casa, s'ta 'tenti ", resource.getId(), updatedValue);
-            }
-        });
-    }
 }
 
 
